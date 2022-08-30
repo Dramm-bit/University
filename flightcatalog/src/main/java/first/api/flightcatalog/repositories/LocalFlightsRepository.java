@@ -7,6 +7,5 @@ import first.api.flightcatalog.model.Flight;
 
 @Repository
 public interface LocalFlightsRepository extends CrudRepository<Flight, Long>{
-
     
 }
