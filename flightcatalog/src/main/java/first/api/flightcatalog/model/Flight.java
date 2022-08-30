@@ -22,7 +22,7 @@ public class Flight {
     private String arrivalAirportName;
     private String arrivalCity;
     private String arrivalLocale;
-    private String ticketPrice;
+    private int ticketPrice;
     private String ticketCurrency;
     private int flightNumber;
     private int seatCapacity;
@@ -50,8 +50,8 @@ public class Flight {
                 vuelo.ticketCurrency,
                 vuelo.flightNumber,
                 vuelo.seatCapacity
-
         );
     }
 
+   
 }
