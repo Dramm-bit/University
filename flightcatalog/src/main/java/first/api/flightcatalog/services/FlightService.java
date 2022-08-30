@@ -67,4 +67,17 @@ public class FlightService {
         );
         return repository.save(nuevoVuelo);
     }
+
+    public Optional<Flight> update(Long id, Flight newFlight){
+        return repository.findById(id).map(
+            oldItem -> {
+                Flight updated = oldItem.updateWith(newFlight);
+                return repository.save(updated);
+            }
+        );
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
 }
