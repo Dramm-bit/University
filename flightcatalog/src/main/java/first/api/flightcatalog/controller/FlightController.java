@@ -35,37 +35,36 @@ public class FlightController {
         this.service = service;
     }
 
-    /**
-     * @param departureAirportCode
-     * @param arrivalAirportCode
-     * @return
-     */
     @GetMapping
     public ResponseEntity<List<Flight>> findFlights(
         @RequestParam(defaultValue = "") Optional<String> departureAirportCode,
         @RequestParam(defaultValue = "") Optional<String> arrivalAirportCode
     ){
-        List<Flight> flights = new ArrayList<Flight>();
-        if(departureAirportCode.isEmpty() && arrivalAirportCode.isEmpty()){
-            flights = service.findAll();
-            return ResponseEntity.ok().body(flights);
-        }else if(!departureAirportCode.isEmpty() && arrivalAirportCode.isEmpty()){
+        if(!departureAirportCode.isEmpty() && arrivalAirportCode.isEmpty()){
             List<Flight> flightsList = service.findAll();
+            List<Flight> flights = new ArrayList<>();
             flightsList.forEach( 
-              (flight) -> extracted(departureAirportCode, flights, flight)  
+              (flight) -> {
+                if(flight.getDepartureAirportCode().equals(departureAirportCode))
+                    flights.add(flight); 
+              }  
             );
+            return ResponseEntity.ok().body(flights);
         }else if(departureAirportCode.isEmpty() && !arrivalAirportCode.isEmpty()){
             List<Flight> flightsList = service.findAll();
+            List<Flight> flights = new ArrayList<>();
             flightsList.forEach( 
-              (flight) -> extracted(arrivalAirportCode, flights, flight);  
+              (flight) -> {
+                if(flight.getDepartureAirportCode().equals(arrivalAirportCode))
+                    flights.add(flight); 
+              }  
             );
+            return ResponseEntity.ok().body(flights);
+        }else{
+            List<Flight> flights = service.findAll();
+            return ResponseEntity.ok().body(flights);
         }
-        return ResponseEntity.ok().body(flights);
-    }
 
-    private void extracted(Optional<String> code, List<Flight> flights, Flight flight) {
-        if(flight.getDepartureAirportCode().toString().equals(code))
-            flights.add(flight);
     }
     
     @PostMapping
