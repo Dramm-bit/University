@@ -37,7 +37,7 @@ public class FlightController {
         return ResponseEntity.ok().body(items);
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/")
     public ResponseEntity<List<Flight>> findFlights4Param(
             @RequestParam String departureAirportCode,
             @RequestParam String arrivalAirportName,
@@ -49,13 +49,13 @@ public class FlightController {
 
     }
 
-    @GetMapping("/filterByDate")
-    public ResponseEntity<List<Flight>> findByDate(@RequestParam String departureDate) {
+    @GetMapping("/{airportCode}")
+    public ResponseEntity<List<Flight>> findByDate(@PathVariable String departureDate) {
         List<Flight> findedFlights = serviceFlightService.findbydate(departureDate);
         return ResponseEntity.ok().body(findedFlights);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<Flight> create(@Valid @RequestBody Flight flight) {
         Flight created = serviceFlightService.create(flight);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
