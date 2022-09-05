@@ -37,33 +37,32 @@ public class FlightController {
 
     @GetMapping
     public ResponseEntity<List<Flight>> findFlights(
-        @RequestParam(defaultValue = "") Optional<String> departureAirportCode,
-        @RequestParam(defaultValue = "") Optional<String> arrivalAirportCode
+        @RequestParam(defaultValue = "") String departureAirportCode,
+        @RequestParam(defaultValue = "") String arrivalAirportCode
     ){
-        if(!departureAirportCode.isEmpty() && arrivalAirportCode.isEmpty()){
-            List<Flight> flightsList = service.findAll();
-            List<Flight> flights = new ArrayList<>();
-            flightsList.forEach( 
-              (flight) -> {
-                if(flight.getDepartureAirportCode().equals(departureAirportCode))
-                    flights.add(flight); 
-              }  
-            );
-            return ResponseEntity.ok().body(flights);
-        }else if(departureAirportCode.isEmpty() && !arrivalAirportCode.isEmpty()){
-            List<Flight> flightsList = service.findAll();
-            List<Flight> flights = new ArrayList<>();
-            flightsList.forEach( 
-              (flight) -> {
-                if(flight.getDepartureAirportCode().equals(arrivalAirportCode))
-                    flights.add(flight); 
-              }  
-            );
-            return ResponseEntity.ok().body(flights);
-        }else{
-            List<Flight> flights = service.findAll();
-            return ResponseEntity.ok().body(flights);
-        }
+       
+        List<Flight> flightsList = service.findAll();
+        List<Flight> flights = new ArrayList<>();
+      
+        flightsList.forEach( 
+            (flight) -> {
+
+            Boolean condition = true;
+            if(!departureAirportCode.isBlank()) {
+                condition = condition && flight.getDepartureAirportCode().equals(departureAirportCode);
+            }
+            if(!arrivalAirportCode.isBlank()){
+                condition = condition && flight.getArrivalAirportName().equals(arrivalAirportCode);
+            }
+
+            if(
+                condition
+            )
+                flights.add(flight); 
+            }  
+        );
+        return ResponseEntity.ok().body(flights);
+
 
     }
     
