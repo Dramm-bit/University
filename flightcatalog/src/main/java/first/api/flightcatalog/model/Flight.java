@@ -50,7 +50,6 @@ public class Flight {
                 vuelo.ticketCurrency,
                 vuelo.flightNumber,
                 vuelo.seatCapacity
-
         );
     }
 

@@ -20,19 +20,26 @@ public class FlightService {
         this.repository = repository;
         this.repository.saveAll(defaultFlights());
     }
-
+    
     private Iterable defaultFlights(){
-        return List.of(
-            new Flight(1, "23-04-2022", "234ij4o","askpk12po43", "Moteria","fk34k34k43","23-04-2022", "2394834f", "ojeopgkpork", "monteria","no me acuerdo xd", 120000,"COP", 101,50));
-            new Flight(2, "24-04-2022", "234ij4o","askpk12po43", "Cali","o4334500","24-04-2022", "2394834f", "ojeopgkpork", "Bogota","no me acuerdo xd", 150000,"COP", 102,50 );
-            new Flight(3, "25-04-2022", "234ij4o","askpk12po43", "bucaramanga","wiopejkrio34jr","25-04-2022", "2394834f", "ojeopgkpork", "Medellin","no me acuerdo xd", 100000,"COP", 103,50 );
-
-        ));
+        return List.of(   
+            new Flight(1, "23-04-2022", "123","askpk12po43", 
+                        "Moteria","fk34k34k43","23-04-2022", "2394834f", 
+                        "ojeopgkpork", "monteria","no me acuerdo xd", 120000,
+                        "COP", 101,50),
+            new Flight(2, "24-04-2022", "234ij4o","askpk12po43", "Cali",
+                        "o4334500","24-04-2022", "2394834f", "ojeopgkpork", 
+                        "Bogota","no me acuerdo xd", 150000,"COP", 102,50 ),
+            new Flight(3, "25-04-2022", "234ij4o","askpk12po43", "bucaramanga",
+                        "wiopejkrio34jr","25-04-2022", "444", "ojeopgkpork", 
+                        "Medellin","no me acuerdo xd", 100000,"COP", 103,50 )
+        );
     }
 
     public List<Flight> findAll() {
         List<Flight> listFlights = new ArrayList<>();
         Iterable<Flight> vuelos = repository.findAll();
+        
         vuelos.forEach(listFlights::add);
         return listFlights;
     }
@@ -60,5 +67,18 @@ public class FlightService {
                 vuelo.getSeatCapacity()
         );
         return repository.save(nuevoVuelo);
+    }
+
+    public Optional<Flight> update(Long id, Flight newFlight){
+        return repository.findById(id).map(
+            oldItem -> {
+                Flight updated = oldItem.updateWith(newFlight);
+                return repository.save(updated);
+            }
+        );
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
     }
 }
