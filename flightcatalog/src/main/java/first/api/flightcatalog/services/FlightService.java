@@ -24,14 +24,14 @@ public class FlightService {
     private Iterable defaultFlights(){
         return List.of(   
             new Flight(1, "23-04-2022", "123","askpk12po43", 
-                        "Moteria","fk34k34k43","23-04-2022", "2394834f", 
-                        "ojeopgkpork", "monteria","no me acuerdo xd", 120000,
+                        "Moteria","fk34k34k43","23-04-2022", "2394", 
+                        "name1", "monteria","no me acuerdo xd", 120000,
                         "COP", 101,50),
-            new Flight(2, "24-04-2022", "234ij4o","askpk12po43", "Cali",
-                        "o4334500","24-04-2022", "2394834f", "ojeopgkpork", 
+            new Flight(2, "23-04-2022", "123","askpk12po43", "Cali",
+                        "o4334500","24-04-2022", "2394", "name2", 
                         "Bogota","no me acuerdo xd", 150000,"COP", 102,50 ),
             new Flight(3, "25-04-2022", "234ij4o","askpk12po43", "bucaramanga",
-                        "wiopejkrio34jr","25-04-2022", "444", "ojeopgkpork", 
+                        "wiopejkrio34jr","25-04-2022", "444", "name3", 
                         "Medellin","no me acuerdo xd", 100000,"COP", 103,50 )
         );
     }
@@ -42,6 +42,36 @@ public class FlightService {
         
         vuelos.forEach(listFlights::add);
         return listFlights;
+    }
+
+    public List<Flight> search4param(String dac, String aac, String dd){
+        List<Flight> flightsList = findAll();
+        List<Flight> flights = new ArrayList<>();
+      
+        flightsList.forEach( 
+            (flight) -> {
+
+            Boolean condition = true;
+            if(!dac.isBlank()) {
+                condition = condition && flight.getDepartureAirportCode().equals(dac);
+            }
+            if(!aac.isBlank()){
+                condition = condition && flight.getArrivalAirportName().equals(aac);
+                System.out.println("funciona cierto?");
+                
+            }
+            if(!dd.isBlank()){
+                condition = condition && flight.getDepartureDate().equals(dd);
+            }
+
+            if(
+                condition
+            )
+                flights.add(flight); 
+            }  
+        );
+
+        return flights;
     }
 
     public Optional<Flight> find(Long id) {

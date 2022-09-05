@@ -1,15 +1,11 @@
 package first.api.flightcatalog.controller;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.Servlet;
 import javax.validation.Valid;
 
-import org.apache.catalina.connector.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,78 +22,64 @@ import first.api.flightcatalog.model.Flight;
 import first.api.flightcatalog.services.FlightService;
 
 @RestController
-@RequestMapping("api/catalog/")
+@RequestMapping("api/catalog")
 public class FlightController {
-    
-    private final FlightService service;
 
-    public FlightController(FlightService service){
-        this.service = service;
+    private final FlightService serviceFlightService;
+
+    public FlightController(FlightService serviceFlightService) {
+        this.serviceFlightService = serviceFlightService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Flight>> findFlights(
-        @RequestParam(defaultValue = "") String departureAirportCode,
-        @RequestParam(defaultValue = "") String arrivalAirportCode
-    ){
-       
-        List<Flight> flightsList = service.findAll();
-        List<Flight> flights = new ArrayList<>();
-      
-        flightsList.forEach( 
-            (flight) -> {
+    @GetMapping("/find")
+    public ResponseEntity<List<Flight>> findAll() {
+        List<Flight> items = serviceFlightService.findAll();
+        return ResponseEntity.ok().body(items);
+    }
 
-            Boolean condition = true;
-            if(!departureAirportCode.isBlank()) {
-                condition = condition && flight.getDepartureAirportCode().equals(departureAirportCode);
-            }
-            if(!arrivalAirportCode.isBlank()){
-                condition = condition && flight.getArrivalAirportName().equals(arrivalAirportCode);
-            }
+    @GetMapping("/filter")
+    public ResponseEntity<List<Flight>> findFlights4Param(
+            @RequestParam(defaultValue = "") String departureAirportCode,
+            @RequestParam(defaultValue = "") String arrivalAirportName,
+            @RequestParam(defaultValue = "") String departureDate) {
+        List<Flight> findedFlights = serviceFlightService.search4param(departureAirportCode, arrivalAirportName,
+                departureDate);
 
-            if(
-                condition
-            )
-                flights.add(flight); 
-            }  
-        );
-        return ResponseEntity.ok().body(flights);
-
+        return ResponseEntity.ok().body(findedFlights);
 
     }
-    
-    @PostMapping
-    public ResponseEntity<Flight> create(@Valid @RequestBody Flight flight){
-        Flight created = service.create(flight);
+
+    @PostMapping("/add")
+    public ResponseEntity<Flight> create(@Valid @RequestBody Flight flight) {
+        Flight created = serviceFlightService.create(flight);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{id}")
-            .buildAndExpand(created.getId())
-            .toUri();
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
         return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Flight> update(
-        @PathVariable("id") Long id,
-        @Valid @RequestBody Flight updatedItem
-    ){
-        Optional<Flight> updated = service.update(id, updatedItem);
+            @PathVariable("id") Long id,
+            @Valid @RequestBody Flight updatedItem) {
+        Optional<Flight> updated = serviceFlightService.update(id, updatedItem);
 
         return updated
-            .map(value -> ResponseEntity.ok().body(value))
-            .orElseGet(()-> {
-                Flight created = service.create(updatedItem);
-                URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(created.getId())
-                        .toUri();
-                return ResponseEntity.created(location).body(created);
-            });
+                .map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> {
+                    Flight created = serviceFlightService.create(updatedItem);
+                    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                            .path("/{id}")
+                            .buildAndExpand(created.getId())
+                            .toUri();
+                    return ResponseEntity.created(location).body(created);
+                });
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Flight> delete(@PathVariable("id") Long id){
-        service.delete(id);
+    public ResponseEntity<Flight> delete(@PathVariable("id") Long id) {
+        serviceFlightService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
