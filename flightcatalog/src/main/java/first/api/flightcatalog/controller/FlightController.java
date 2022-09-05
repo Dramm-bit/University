@@ -39,14 +39,20 @@ public class FlightController {
 
     @GetMapping("/filter")
     public ResponseEntity<List<Flight>> findFlights4Param(
-            @RequestParam(defaultValue = "") String departureAirportCode,
-            @RequestParam(defaultValue = "") String arrivalAirportName,
-            @RequestParam(defaultValue = "") String departureDate) {
+            @RequestParam String departureAirportCode,
+            @RequestParam String arrivalAirportName,
+            @RequestParam String departureDate) {
         List<Flight> findedFlights = serviceFlightService.search4param(departureAirportCode, arrivalAirportName,
                 departureDate);
 
         return ResponseEntity.ok().body(findedFlights);
 
+    }
+
+    @GetMapping("/filterByDate")
+    public ResponseEntity<List<Flight>> findByDate(@RequestParam String departureDate) {
+        List<Flight> findedFlights = serviceFlightService.findbydate(departureDate);
+        return ResponseEntity.ok().body(findedFlights);
     }
 
     @PostMapping("/add")
