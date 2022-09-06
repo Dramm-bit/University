@@ -42,7 +42,7 @@ public class FlightService {
         return listFlights;
     }
 
-    public List<Flight> search4param(String dac, String aac, String dd) {
+    public List<Flight> search4param(String dac, String aan, String dd) {
         List<Flight> flightsList = findAll();
         List<Flight> flights = new ArrayList<>();
 
@@ -52,14 +52,17 @@ public class FlightService {
                     Boolean condition = true;
                     if (!dac.isBlank()) {
                         condition = condition && flight.getDepartureAirportCode().equals(dac);
+                        System.out.println("entre1");
                     }
-                    if (!aac.isBlank()) {
-                        condition = condition && flight.getArrivalAirportName().equals(aac);
+                    if (!aan.isBlank()) {
+                        condition = condition && flight.getArrivalAirportName().equals(aan);
+                        System.out.println("entre2");
                         
 
                     }
                     if (!dd.isBlank()) {
                         condition = condition && flight.getDepartureDate().equals(dd);
+                        System.out.println("entre3");
                     }
 
                     if (condition)

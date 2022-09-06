@@ -49,8 +49,8 @@ public class FlightController {
 
     }
 
-    @GetMapping("/{airportCode}")
-    public ResponseEntity<List<Flight>> findByDate(@PathVariable String departureDate) {
+    @GetMapping("/airportCode")
+    public ResponseEntity<List<Flight>> findByDate(@RequestParam String departureDate) {
         List<Flight> findedFlights = serviceFlightService.findbydate(departureDate);
         return ResponseEntity.ok().body(findedFlights);
     }
