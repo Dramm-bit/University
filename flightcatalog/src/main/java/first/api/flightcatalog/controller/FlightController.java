@@ -39,9 +39,9 @@ public class FlightController {
 
     @GetMapping("/filter")
     public ResponseEntity<List<Flight>> findFlights4Param(
-            @RequestParam String departureAirportCode,
-            @RequestParam String arrivalAirportName,
-            @RequestParam String departureDate) {
+            @RequestParam(required =false) String departureAirportCode,
+            @RequestParam (required =false) String arrivalAirportName,
+            @RequestParam (required =false) String departureDate) {
         List<Flight> findedFlights = serviceFlightService.search4param(departureAirportCode, arrivalAirportName,
                 departureDate);
 

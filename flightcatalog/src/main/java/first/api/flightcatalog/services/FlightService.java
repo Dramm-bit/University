@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+
 
 import org.springframework.data.map.repository.config.EnableMapRepositories;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class FlightService {
         return listFlights;
     }
 
-    public List<Flight> search4param(String dac, String aac, String dd) {
+    public List<Flight> search4param(String dac, String aan, String dd) {
         List<Flight> flightsList = findAll();
         List<Flight> flights = new ArrayList<>();
 
@@ -52,16 +52,19 @@ public class FlightService {
                 (flight) -> {
 
                     Boolean condition = true;
-                    if (!dac.isBlank()) {
+                    if (dac!=null) {
                         condition = condition && flight.getDepartureAirportCode().equals(dac);
+                        
                     }
-                    if (!aac.isBlank()) {
-                        condition = condition && flight.getArrivalAirportName().equals(aac);
+                    if (aan!=null) {
+                        condition = condition && flight.getArrivalAirportName().equals(aan);
+                        
                         
 
                     }
-                    if (!dd.isBlank()) {
+                    if (dd!=null) {
                         condition = condition && flight.getDepartureDate().equals(dd);
+                        
                     }
 
                     if (condition)
