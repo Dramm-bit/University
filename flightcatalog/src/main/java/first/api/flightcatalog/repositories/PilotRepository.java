@@ -2,8 +2,8 @@ package first.api.flightcatalog.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import first.api.flightcatalog.model.User;
+import first.api.flightcatalog.model.Pilot;
 
-public interface UserRepository  extends JpaRepository<User, Long>{
+public interface PilotRepository extends JpaRepository<Pilot, Long> {
     
 }
