@@ -1,5 +1,7 @@
 package first.api.flightcatalog.model;
 
-public class BookingStatus {
-    
+public enum BookingStatus {
+    UNCONFIRMED,
+    CONFIRMED,
+    CANCELLED
 }

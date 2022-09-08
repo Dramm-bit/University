@@ -1,5 +1,7 @@
 package first.api.flightcatalog.model;
 
-public class Gender {
+public enum Gender {
+    MALE,
+    FEMALE
     
 }
