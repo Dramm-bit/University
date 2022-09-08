@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 import lombok.Data;
 
@@ -26,20 +29,21 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;   
 
-    @OneToMany(mappedBy = "id")
-    private Set<Booking> reserved;
+    
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "flights")
+    private Set<Booking> bookings;
 
     @ManyToMany
     @JoinTable(
-        name = "pilot_flights",
-        joinColumns = @JoinColumns(name = "id_pilot", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "id_flight", referencedColumnName="id")
+        name = "employee_flights",
+        joinColumns = @JoinColumn(name = "id_employee"),
+        inverseJoinColumns = @JoinColumn(name = "id_flight")
     )
     
-   private List<Pilot> pilots = new ArrayList<>(); // no c pa que es esto :V
+   private List<Employee> employees = new ArrayList<>(); // no c pa que es esto :V
 
-   public void addPilot(Pilot pilot){
-    this.pilots.add(pilot);
+   public void addPilot(Employee employee){
+    this.employees.add(employee);
    }
 
 }

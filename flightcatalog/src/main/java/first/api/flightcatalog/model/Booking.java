@@ -1,5 +1,6 @@
 package first.api.flightcatalog.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,14 +22,36 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private Flight outbound;
+    private String paymentToken;
+    private Boolean checkedIn;
+    private User customer;
+    private String createdAt;
+    private String bookingReference;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
-    @ManyToOne()
-    @JoinColumn(name="id_flight")
-    private Flight flight;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_flight", nullable = false)
+    private Flight flights;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_user")//Como en la linea de abajo indicamos con que tabla se relaciona el busca por defecto el id de dicha tabla
-    private User user;
+    private User users;
 }

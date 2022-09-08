@@ -2,7 +2,7 @@ package first.api.flightcatalog.model;
 
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,11 +16,11 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "pilots")
+@Table(name = "employees")
 @Data
 
 
-public class Pilot {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Pilot {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Flight> flights;
     
 }

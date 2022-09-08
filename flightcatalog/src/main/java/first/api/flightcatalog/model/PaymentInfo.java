@@ -1,5 +1,6 @@
 package first.api.flightcatalog.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "paymentinfo's")
+@Table(name = "payment_info")
 @Data
 
 public class PaymentInfo {
@@ -21,7 +22,7 @@ public class PaymentInfo {
 
 
 
-    @OneToOne(mappedBy = "id")
-    private User user;
+    @OneToOne(cascade=CascadeType.ALL,mappedBy = "payment_info")
+    private User users;
 
 }

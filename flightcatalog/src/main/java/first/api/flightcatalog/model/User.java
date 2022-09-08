@@ -1,12 +1,11 @@
 package first.api.flightcatalog.model;
 
-
-
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,14 +24,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne(mappedBy = "id")
+    @OneToOne()
     @JoinColumn(name = "id_payment")
-    private PaymentInfo paymentinfo;
-    
-    @OneToMany(mappedBy = "id")
+    private PaymentInfo payment_info;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "users")
     private Set<Booking> bookings;
 }
