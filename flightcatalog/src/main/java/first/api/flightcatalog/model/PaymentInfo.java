@@ -1,6 +1,7 @@
 package first.api.flightcatalog.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,19 @@ public class PaymentInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
+    @Column(name = "payment-method")
+    private String paymentMethod;
+
+    @Column(name = "card_number")
+    private long cardNumber;
+
+    @Column(name = "postal_code")
+    private int postalCode;
+
+    private String country;
+
+    private String state;
+
 
 
 

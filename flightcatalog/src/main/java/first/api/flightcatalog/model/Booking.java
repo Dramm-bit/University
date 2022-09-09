@@ -23,18 +23,17 @@ public class Booking {
     private long id;
 
 
-    @Column(name = "Payment_Token")
+    @Column(name = "payment_token")
     private String paymentToken;
 
-    @Column(name = "Checked_In")
+    @Column(name = "checked_in")
     private Boolean checkedIn;
 
-    
 
-    @Column(name = "Created_At")
+    @Column(name = "created_at")
     private String createdAt;
 
-    @Column(name = "Booking_Reference")
+    @Column(name = "booking_reference")
     private String bookingReference;
 
     @Enumerated(EnumType.STRING)

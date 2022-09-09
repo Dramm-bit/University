@@ -3,6 +3,7 @@ package first.api.flightcatalog.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,6 +24,14 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    
+    @Column(name = "fullname")
+    private String fullName;
+
+    private String role;
+
+    @Column(name = "total_hours")
+    private long totalHours;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Flight> flight;

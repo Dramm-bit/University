@@ -2,6 +2,7 @@ package first.api.flightcatalog.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +26,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "fullname")
+    private String fullName;
+
+    private String birthday;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -32,6 +38,6 @@ public class User {
     @JoinColumn(name = "id_payment")
     private PaymentInfo paymentInfo;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "custumer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "custumer")
     private Set<Booking> booking;
 }
