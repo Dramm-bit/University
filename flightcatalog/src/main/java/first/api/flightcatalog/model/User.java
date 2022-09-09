@@ -32,6 +32,6 @@ public class User {
     @JoinColumn(name = "id_payment")
     private PaymentInfo paymentInfo;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private Set<Booking> bookings;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "custumer")
+    private Set<Booking> booking;
 }

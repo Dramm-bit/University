@@ -25,6 +25,6 @@ public class Employee {
     private Gender gender;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<Flight> flights;
+    private List<Flight> flight;
     
 }
