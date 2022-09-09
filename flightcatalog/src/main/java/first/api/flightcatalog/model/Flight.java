@@ -21,16 +21,13 @@ import lombok.Data;
 @Entity
 @Table(name = "flights")
 @Data
-
-
-
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;   
 
     
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "flights")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "flight")
     private Set<Booking> bookings;
 
     @ManyToMany
@@ -39,7 +36,6 @@ public class Flight {
         joinColumns = @JoinColumn(name = "id_employee"),
         inverseJoinColumns = @JoinColumn(name = "id_flight")
     )
-    
    private List<Employee> employees = new ArrayList<>(); // no c pa que es esto :V
 
    public void addPilot(Employee employee){
