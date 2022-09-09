@@ -22,7 +22,7 @@ public class PaymentInfo {
 
 
 
-    @OneToOne(cascade=CascadeType.ALL,mappedBy = "payment_info")
-    private User users;
+    @OneToOne(cascade=CascadeType.ALL,mappedBy = "paymentInfo")
+    private User user;
 
 }
