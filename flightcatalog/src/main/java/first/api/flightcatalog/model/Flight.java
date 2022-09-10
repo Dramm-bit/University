@@ -16,13 +16,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
+
 import lombok.Data;
+
 
 @Entity
 @Table(name = "flights")
 @Data
 
+
+
 public class Flight {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -58,7 +63,7 @@ public class Flight {
     private String arrivalLocale;
 
     @Column(name = "Ticket_Price")
-    private int ticketPrice;
+    private double ticketPrice;
 
     @Column(name = "Ticket_Currency")
     private String ticketCurrency;
@@ -75,7 +80,9 @@ public class Flight {
     @ManyToMany
     @JoinTable(
         name = "employees_flights",
+        
         joinColumns = @JoinColumn(name = "id_employee"),
+        
         inverseJoinColumns = @JoinColumn(name = "id_flight")
     )
     private List<Employee> employees = new ArrayList<>(); // no c pa que es esto :V

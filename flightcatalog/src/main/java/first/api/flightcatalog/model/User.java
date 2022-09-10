@@ -38,6 +38,6 @@ public class User {
     @JoinColumn(name = "id_payment")
     private PaymentInfo paymentInfo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "custumer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<Booking> booking;
 }

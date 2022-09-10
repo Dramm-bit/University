@@ -12,11 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 import lombok.Data;
 
 @Entity
 @Table(name = "bookings")
 @Data
+
+
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,13 +42,15 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
+    
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_outbondflight", nullable = false)
+    @JoinColumn()
     private Flight outboundflight;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_customer") // Como en la linea de abajo indicamos con que tabla se relaciona el busca por
+    @JoinColumn(name = "id_customer", referencedColumnName ="id") // Como en la linea de abajo indicamos con que tabla se relaciona el busca por
                                   // defecto el id de dicha tabla
-    private User custumer;
+    private User customer;
 }
 
