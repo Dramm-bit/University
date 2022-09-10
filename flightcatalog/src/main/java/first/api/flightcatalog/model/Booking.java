@@ -49,7 +49,7 @@ public class Booking {
     private Flight outboundflight;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_customer", referencedColumnName ="id") // Como en la linea de abajo indicamos con que tabla se relaciona el busca por
+    @JoinColumn(name = "id_customer") // Como en la linea de abajo indicamos con que tabla se relaciona el busca por
                                   // defecto el id de dicha tabla
     private User customer;
 }
