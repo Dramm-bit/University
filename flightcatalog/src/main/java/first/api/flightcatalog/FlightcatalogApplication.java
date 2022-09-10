@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 import first.api.flightcatalog.model.Booking;
 import first.api.flightcatalog.model.BookingStatus;
+import first.api.flightcatalog.model.Employee;
 import first.api.flightcatalog.model.Flight;
 import first.api.flightcatalog.model.Gender;
 import first.api.flightcatalog.model.PaymentInfo;
@@ -30,6 +31,12 @@ public class FlightcatalogApplication {
 			UserRepository userRepository) {
 
 		return args -> {
+			Employee employee = new Employee();
+			employee.setGender(Gender.FEMALE);
+			employee.setFullName("queteimportacaraetorta");
+			employee.setRole("azafata");
+			employee.setTotalHours(1234);
+			employeeRepository.save(employee);
 
 			PaymentInfo paymentInfo = new PaymentInfo();
 			paymentInfo.setPaymentMethod("jcb");
